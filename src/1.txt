@@ -1,0 +1,36 @@
+subnet 10.100.0.0 netmask 255.255.0.0 {}
+
+subnet 10.10.0.0 netmask 255.255.192.0
+{
+        range 10.10.0.2 10.10.0.50;
+        option routers 10.10.0.1;
+        option domain-name-servers 10.10.0.1;
+}
+
+
+
+
+
+r2
+
+
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    enp0s3:
+      dhcp4: true
+    enp0s8:
+      dhcp4: false
+      addresses: [10.100.0.12/16]
+      routes:
+              - to: 10.20.0.0/26
+                via: 10.20.0.1
+              - to: 10.10.0.0/18
+                via: 10.100.0.11
+    enp0s9:
+      dhcp4: false
+      addresses: [10.20.0.1/26]
+      routes:
+              - to: 10.10.0.0/18
+                via: 10.100.0.12
+  version: 2
